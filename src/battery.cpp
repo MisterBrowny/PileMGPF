@@ -25,48 +25,45 @@ void battery_refresh (void)
 
     temp = moy_analog(ANALOG_MB_1_2, DefNbMesureBat);
     Modbus.state.battery_cell[0] = (uint16_t) (temp * CONVERSION_BATT * 1000);
-    sprintf(string_test, "ANALOG_MB_1_2 =%d", Modbus.state.battery_cell[0]);
-	SERIAL_DEBUG(string_test);
-
-    sprintf(string_test, "temp =%u", temp);
+    sprintf(string_test, "ANALOG_MB_1_2 =%u", Modbus.state.battery_cell[0]);
 	SERIAL_DEBUG(string_test);
 
     temp = moy_analog(ANALOG_MB_3, DefNbMesureBat);
     Modbus.state.battery_cell[1] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[0];
-    sprintf(string_test, "ANALOG_MB_3 =%d", Modbus.state.battery_cell[1]);
+    sprintf(string_test, "ANALOG_MB_3 =%u", Modbus.state.battery_cell[1]);
 	SERIAL_DEBUG(string_test);
 
     temp = moy_analog(ANALOG_MB_4, DefNbMesureBat);
-    Modbus.state.battery_cell[2] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[1];
-    sprintf(string_test, "ANALOG_MB_4 =%d", Modbus.state.battery_cell[2]);
+    Modbus.state.battery_cell[2] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[1] - Modbus.state.battery_cell[0];
+    sprintf(string_test, "ANALOG_MB_4 =%u", Modbus.state.battery_cell[2]);
 	SERIAL_DEBUG(string_test);
 
     temp = moy_analog(ANALOG_MB_5_6, DefNbMesureBat);
-    Modbus.state.battery_cell[3] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[2];
-    sprintf(string_test, "ANALOG_MB_5_6 =%d", Modbus.state.battery_cell[3]);
+    Modbus.state.battery_cell[3] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[2] - Modbus.state.battery_cell[1] - Modbus.state.battery_cell[0];
+    sprintf(string_test, "ANALOG_MB_5_6 =%u", Modbus.state.battery_cell[3]);
 	SERIAL_DEBUG(string_test);
 
     temp = moy_analog(ANALOG_MB_7, DefNbMesureBat);
-    Modbus.state.battery_cell[4] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[3];
-    sprintf(string_test, "ANALOG_MB_7 =%d", Modbus.state.battery_cell[4]);
+    Modbus.state.battery_cell[4] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[3] - Modbus.state.battery_cell[2] - Modbus.state.battery_cell[1] - Modbus.state.battery_cell[0];
+    sprintf(string_test, "ANALOG_MB_7 =%u", Modbus.state.battery_cell[4]);
 	SERIAL_DEBUG(string_test);
     
     temp = moy_analog(ANALOG_MB_8, DefNbMesureBat);
-    Modbus.state.battery_cell[5] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[4];
-    sprintf(string_test, "ANALOG_MB_8 =%d", Modbus.state.battery_cell[5]);
+    Modbus.state.battery_cell[5] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[4] - Modbus.state.battery_cell[3] - Modbus.state.battery_cell[2] - Modbus.state.battery_cell[1] - Modbus.state.battery_cell[0];
+    sprintf(string_test, "ANALOG_MB_8 =%u", Modbus.state.battery_cell[5]);
 	SERIAL_DEBUG(string_test);    
     
     temp = moy_analog(ANALOG_MB_9, DefNbMesureBat);
-    Modbus.state.battery_cell[6] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[5];
-    sprintf(string_test, "ANALOG_MB_9 =%d", Modbus.state.battery_cell[6]);
+    Modbus.state.battery_cell[6] = (uint16_t) (temp * CONVERSION_BATT * 1000) - Modbus.state.battery_cell[5] - Modbus.state.battery_cell[4] - Modbus.state.battery_cell[3] - Modbus.state.battery_cell[2] - Modbus.state.battery_cell[1] - Modbus.state.battery_cell[0];
+    sprintf(string_test, "ANALOG_MB_9 =%u", Modbus.state.battery_cell[6]);
 	SERIAL_DEBUG(string_test);    
     
     temp = moy_analog(ANALOG_MB_10, DefNbMesureBat);
     Modbus.state.battery_voltage = (uint16_t) (temp * CONVERSION_BATT * 1000);
-    Modbus.state.battery_cell[7] = Modbus.state.battery_voltage - Modbus.state.battery_cell[6];
-    sprintf(string_test, "ANALOG_MB_10 =%d", Modbus.state.battery_cell[7]);
+    Modbus.state.battery_cell[7] = Modbus.state.battery_voltage - Modbus.state.battery_cell[6] - Modbus.state.battery_cell[5] - Modbus.state.battery_cell[4] - Modbus.state.battery_cell[3] - Modbus.state.battery_cell[2] - Modbus.state.battery_cell[1] - Modbus.state.battery_cell[0];
+    sprintf(string_test, "ANALOG_MB_10 =%u", Modbus.state.battery_cell[7]);
 	SERIAL_DEBUG(string_test); 
 
-    sprintf(string_test, "battery_voltage =%d", Modbus.state.battery_voltage);
+    sprintf(string_test, "battery_voltage =%u", Modbus.state.battery_voltage);
 	SERIAL_DEBUG(string_test);
 }
