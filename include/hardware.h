@@ -28,7 +28,7 @@ extern const uint8_t SLAVE_ID;
 
 #define CONVERSION_BATT     (float) (CONVERSION_ADC / PONT_DIVISEUR)
 
-#define DefNbMesureBat      30
+#define DefNbMesureBat      1
 
 void hw_config(void);
 

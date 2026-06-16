@@ -66,4 +66,45 @@ void battery_refresh (void)
 
     sprintf(string_test, "battery_voltage =%u", Modbus.state.battery_voltage);
 	SERIAL_DEBUG(string_test);
+
+    if (Modbus.state.battery_voltage <= 30000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_VOLTAGE_UNDER_30_V;
+    }
+    else if (Modbus.state.battery_cell[0] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[1] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[2] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[3] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[4] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[5] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[6] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else if (Modbus.state.battery_cell[7] <= 3000)
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+    }
+    else
+    {
+        Modbus.state.global_state = GLOBAL_STATE_BATTERY_OK;
+    }
 }
