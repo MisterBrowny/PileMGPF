@@ -1,6 +1,6 @@
 #include "includes.h"
 
-const uint8_t SLAVE_ID = 200;       // ← CHANGE CE NUMÉRO pour chaque NANO (200 à 220)
+const uint8_t SLAVE_ID = 220;       // ← CHANGE CE NUMÉRO pour chaque NANO (200 à 220)
 
 void setup() {
   

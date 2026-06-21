@@ -70,41 +70,23 @@ void battery_refresh (void)
     if (Modbus.state.battery_voltage <= 30000)
     {
         Modbus.state.global_state = GLOBAL_STATE_BATTERY_VOLTAGE_UNDER_30_V;
+        pixel_set (PIXEL_NUM_STATE, DEF_COLOR_UNDER_30V_R, DEF_COLOR_UNDER_30V_G, DEF_COLOR_UNDER_30V_B);
     }
-    else if (Modbus.state.battery_cell[0] <= 3000)
+    else if (   (Modbus.state.battery_cell[0] <= 3000)
+             || (Modbus.state.battery_cell[1] <= 3000)
+             || (Modbus.state.battery_cell[2] <= 3000)
+             || (Modbus.state.battery_cell[3] <= 3000)
+             || (Modbus.state.battery_cell[4] <= 3000)
+             || (Modbus.state.battery_cell[5] <= 3000)
+             || (Modbus.state.battery_cell[6] <= 3000)
+             || (Modbus.state.battery_cell[7] <= 3000))
     {
         Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[1] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[2] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[3] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[4] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[5] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[6] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
-    }
-    else if (Modbus.state.battery_cell[7] <= 3000)
-    {
-        Modbus.state.global_state = GLOBAL_STATE_BATTERY_CELL_UNDER_3_V;
+        pixel_set (PIXEL_NUM_STATE, DEF_COLOR_UNDER_3V_R, DEF_COLOR_UNDER_3V_G, DEF_COLOR_UNDER_3V_B);
     }
     else
     {
         Modbus.state.global_state = GLOBAL_STATE_BATTERY_OK;
+        pixel_set (PIXEL_NUM_STATE, DEF_COLOR_OK_R, DEF_COLOR_OK_G, DEF_COLOR_OK_B);
     }
 }

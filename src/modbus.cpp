@@ -3,12 +3,19 @@
 #include <ModbusRTUSlave.h>
 #include <SoftwareSerial.h>
 
+#define DEF_TEST_MODBUS     0
 
+#if DEF_TEST_MODBUS
+    #define MODBUS_REFRESH_TIME       2000 // ms
+    static uint64_t     modbus_test_time;
+    static struStatut   modbus_test;
 
-#define RS485_RX_PIN      7         // D7 RX_5V → RXD du MAX485
-#define RS485_TX_PIN      6         // D6 TX_5V → TXD du MAX485
+#endif
 
-#define BAUDRATE          9600
+#define RS485_RX_PIN        7         // D7 RX_5V → RXD du MAX485
+#define RS485_TX_PIN        6         // D6 TX_5V → TXD du MAX485
+
+#define BAUDRATE            9600
 
 
 struModbus Modbus;
@@ -34,45 +41,34 @@ void modbus_init (void)
     Serial.println("Modbus Slave ready !");
 }
 
-// void modbus_app_test(void)
-// {
-//     if (TempsSup(modbus_test_time,MODBUS_REFRESH_TIME))
-//     {
-//         modbus_test_time = millis();
-//         SERIAL_DEBUG(Modbus.holdingRegisters[0]);
-//         SERIAL_DEBUG(Modbus.holdingRegisters[1]);
-//         SERIAL_DEBUG(Modbus.holdingRegisters[2]);
-//         SERIAL_DEBUG(Modbus.holdingRegisters[3]);
-//         SERIAL_DEBUG(Modbus.holdingRegisters[4]);
-//         // global_state ++;
-//         // if (global_state > MODBUS_STATE_PROG)
-//         // {
-//         //     global_state = MODBUS_STATE_END;
-//         // }
-//         // test_analog_cnt ++;
-//         // if (test_analog_cnt >= MODBUS_ANALOG_NB_VALUE)
-//         // {
-//         //     test_analog_cnt = 0;
-//         // }
-//         // Modbus.state.analog[0] = test_analog[test_analog_cnt];
-//         // Modbus.state.analog[1] = test_analog[test_analog_cnt];
-//         // holdingRegisters[0] = global_state;
-//         // holdingRegisters[1] = Modbus.state.analog[0];
-//         // holdingRegisters[2] = Modbus.state.analog[1];
-//         // holdingRegisters[3] ++;
-//         // holdingRegisters[4] ++;
-//         // holdingRegisters[5] ++;
-//         // holdingRegisters[6] ++;
-//         // holdingRegisters[7] ++;
-//         // holdingRegisters[8] ++;
-//         // holdingRegisters[9] ++;
-//         // holdingRegisters[10] ++;
-//         // holdingRegisters[11] ++;
-//     }   
-// }
+#if DEF_TEST_MODBUS
+    void modbus_app_test(void)
+    {
+        if (TempsSup(modbus_test_time,MODBUS_REFRESH_TIME))
+        {
+            modbus_test_time = millis();
+
+            modbus_test.global_state ++;
+            if (modbus_test.global_state > GLOBAL_STATE_BATTERY_OK)
+            {
+                modbus_test.global_state = GLOBAL_STATE_BATTERY_VOLTAGE_UNDER_30_V;
+            }
+            modbus_test.battery_voltage += 1024;
+            if (modbus_test.battery_voltage > 42000)    { modbus_test.battery_voltage = 0; }
+            for(int i = 0; i < 8; i ++)
+            {
+                modbus_test.battery_cell[i] += 50 + i * 10;
+                if (modbus_test.battery_cell[i] > 4500)    { modbus_test.battery_cell[i] = 2000; }
+            }        
+        }
+        memcpy(&Modbus, &modbus_test, sizeof(struModbus));
+    }
+#endif
 
 void modbus_refresh (void) 
 {
-    //modbus_app_test();
+    #if DEF_TEST_MODBUS
+        modbus_app_test();
+    #endif
     modbus.poll();   // ← indispensable, traite toutes les demandes du maître
 }

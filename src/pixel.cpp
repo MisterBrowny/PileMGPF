@@ -22,9 +22,9 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
-#define  PIXEL_DEFAULT_R	255
-#define  PIXEL_DEFAULT_G	255
-#define  PIXEL_DEFAULT_B	255
+#define  PIXEL_DEFAULT_R	0
+#define  PIXEL_DEFAULT_G	0
+#define  PIXEL_DEFAULT_B	0
 
 
 void pixel_init (void)
